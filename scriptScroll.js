@@ -18,7 +18,7 @@
 		var options = {};
 		$.extend(options,defaults,info);
 		this.each(function(){
-			var $e = $(this), interactedToTop,currentPos = 0, scrollingContainer,track,handle;
+			var $e = $(this), interactedToTop,currentPos = 0, scrollingContainer,track,handle; 
 			$e.handleTop = function(top){
 				handle.css("top",top+"px");						
 			};
