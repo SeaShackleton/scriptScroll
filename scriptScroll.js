@@ -104,7 +104,7 @@
 					//IF THERE IS DATA AVAILABLE, ADD IT TO THE END OF THE CURRENT CONTENT WITHIN scrolling
 					if(options.data.length > 0){
 						scrolling.append(options.data);
-					}
+					} 
 					handle.draggable({ 
 						axis: "x", 
 						containment: "parent",
