@@ -10,7 +10,7 @@
 			trackCornerRadius: 0,
 			handleImage: false,
 			handleWidth: 6,
-			contentPadding: 5,
+			contentPadding: 0,
 			data: null,
 			scrollSpeed: 25
 		};		 
@@ -101,9 +101,9 @@
 					$e.append(track);
 					if(options.trackOpposing === false){
 						$e.prepend(track);
-						scrollingContainer.css('margin-top',options.contentPadding);
+						scrollingContainer.css('padding-top',options.contentPadding);
 					}else{
-						scrollingContainer.css('margin-bottom',options.contentPadding);
+						scrollingContainer.css('padding-bottom',options.contentPadding);
 						$e.append(track);
 					}
 					//IF THERE IS DATA AVAILABLE, ADD IT TO THE END OF THE CURRENT CONTENT WITHIN scrolling
@@ -121,21 +121,25 @@
 					});		
 				}else{
 					//VERTICAL SCROLL
-					$e.wrapInner( $('<div>',{'class':'scrolling'}).css({ width: ($e.width() - options.handleWidth - options.contentPadding),  position:'relative'})  );
+					
+					$e.wrapInner( $('<div>',{'class':'scrolling'}).css({position:'relative'})  );
 					scrolling = $e.find('.scrolling');
 					scrolling.css('height',scrolling.get(0).scrollHeight);
-					scrollingContainer = $('<div>',{'class':'scrollingContainer'}).css({overflow:'hidden', height:'100%', width:($e.width()-options.handleWidth-options.contentPadding)});
-					$e.append(scrollingContainer);
+					scrollingContainer = $('<div>',{'class':'scrollingContainer'}).css({overflow:'hidden', height:'100%', position:'relative',  display: 'inline-block', width:($e.width()-options.handleWidth-options.contentPadding)});
 					scrollingContainer.append(scrolling);
-					track = $("<div>",{'class':'scrollingTrack', css:{height: $e.height(), backgroundColor: options.trackColor, width: options.handleWidth, top:"0px", right:"0px", position:"absolute"}});
+					$e.append(scrollingContainer);
+					
+					track = $("<div>",{'class':'scrollingTrack', css:{height: $e.height(), backgroundColor: options.trackColor, width: options.handleWidth, 'white-space': 'nowrap', display: 'inline-block', position:"relative"}});
 					handle = $("<div>",{'class':"scrollHandle", css:{width:'100%', height:(($e.innerHeight() / scrolling.get(0).scrollHeight) * track.innerHeight()), backgroundColor: options.handleColor, marginTop:'0px', cursor:'pointer'}});
-					track.append(handle);						
+					track.append(handle);				
 					$e.append(track);
+					
+					
 					if(options.trackOpposing === false){
 						$e.prepend(track);
-						//scrollingContainer.css('margin-right',options.contentPadding)
+						scrollingContainer.css('padding-left',options.contentPadding);
 					}else{
-						scrollingContainer.css('margin-left',options.contentPadding);
+						scrollingContainer.css('padding-right',options.contentPadding)
 						$e.append(track);
 					}
 					//IF THERE IS DATA AVAILABLE, ADD IT TO THE END OF THE CURRENT CONTENT WITHIN scrolling
