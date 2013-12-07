@@ -75,11 +75,8 @@
 						}
 					}				
 				
-				}
-			
+				}			
 				track.css("top", $e.scrollTop());
-				
-				return false;
 			};
 			$e.init = function(){
 				if($e.css("overflow") != 'hidden'){
@@ -94,18 +91,19 @@
 					//DEFINE THE SCROLLINT CONTAINER
 					$e.wrapInner( $('<div>',{'class':'scrolling'}).css({position:'relative', height:'120px'})  );
 					scrolling = $e.find('.scrolling');
-					scrollingContainer = $('<div>',{'class':'scrollingContainer'}).css({backgroundColor:'pink', overflow:'hidden',  'white-space':'nowrap'})
+					scrollingContainer = $('<div>',{'class':'scrollingContainer'}).css({backgroundColor:'pink', overflow:'hidden',  'white-space':'nowrap'});
 					$e.append(scrollingContainer);
-					scrollingContainer.append(scrolling)
+					scrollingContainer.scrollLeft(0);
+					scrollingContainer.append(scrolling);
 					track = $("<div>",{'class':'scrollingTrack', css:{width:$e.width(), backgroundColor: options.trackColor, height:'10px', top:"0px", right:"0px", position:"relative"}});
 					handle = $("<div>",{'class':"scrollHandle", css:{height:'100%', width:(($e.innerWidth() / scrolling.get(0).scrollWidth) * track.innerWidth()), backgroundColor: options.handleColor, marginTop:'0px', cursor:'pointer'}});
 					track.append(handle);						
 					$e.append(track);
 					if(options.trackOpposing === false){
 						$e.prepend(track);
-						scrollingContainer.css('margin-top',options.contentPadding)
+						scrollingContainer.css('margin-top',options.contentPadding);
 					}else{
-						scrollingContainer.css('margin-bottom',options.contentPadding)
+						scrollingContainer.css('margin-bottom',options.contentPadding);
 						$e.append(track);
 					}
 					//IF THERE IS DATA AVAILABLE, ADD IT TO THE END OF THE CURRENT CONTENT WITHIN scrolling
@@ -118,16 +116,17 @@
 						drag: function(event, ui) {
 							currentPos = (ui.position.left / (track.innerWidth()-handle.innerWidth())) *(scrolling.get(0).scrollWidth-$e.css("width").replace("px",""));
 							interactedToTop = currentPos;
-							scrollingContainer.scrollLeft(currentPos)		
+							scrollingContainer.scrollLeft(currentPos);	
 						} 
 					});		
 				}else{
+					//VERTICAL SCROLL
 					$e.wrapInner( $('<div>',{'class':'scrolling'}).css({ width: ($e.width() - options.handleWidth - options.contentPadding),  position:'relative'})  );
 					scrolling = $e.find('.scrolling');
-					scrolling.css('height',scrolling.get(0).scrollHeight)
-					scrollingContainer = $('<div>',{'class':'scrollingContainer'}).css({overflow:'hidden', height:'100%', width:($e.width()-options.handleWidth-options.contentPadding)})
+					scrolling.css('height',scrolling.get(0).scrollHeight);
+					scrollingContainer = $('<div>',{'class':'scrollingContainer'}).css({overflow:'hidden', height:'100%', width:($e.width()-options.handleWidth-options.contentPadding)});
 					$e.append(scrollingContainer);
-					scrollingContainer.append(scrolling)
+					scrollingContainer.append(scrolling);
 					track = $("<div>",{'class':'scrollingTrack', css:{height: $e.height(), backgroundColor: options.trackColor, width: options.handleWidth, top:"0px", right:"0px", position:"absolute"}});
 					handle = $("<div>",{'class':"scrollHandle", css:{width:'100%', height:(($e.innerHeight() / scrolling.get(0).scrollHeight) * track.innerHeight()), backgroundColor: options.handleColor, marginTop:'0px', cursor:'pointer'}});
 					track.append(handle);						
@@ -136,7 +135,7 @@
 						$e.prepend(track);
 						//scrollingContainer.css('margin-right',options.contentPadding)
 					}else{
-						scrollingContainer.css('margin-left',options.contentPadding)
+						scrollingContainer.css('margin-left',options.contentPadding);
 						$e.append(track);
 					}
 					//IF THERE IS DATA AVAILABLE, ADD IT TO THE END OF THE CURRENT CONTENT WITHIN scrolling
@@ -149,10 +148,10 @@
 						drag: function(event, ui) {
 							currentPos = (ui.position.top / (track.innerHeight()-handle.innerHeight())) *(scrolling.get(0).scrollHeight-$e.height());
 							interactedToTop = currentPos;
-							scrollingContainer.scrollTop(currentPos)		
+							scrollingContainer.scrollTop(currentPos);		
 						} 
 					});						
-				};				
+				}				
 				handle.css({ 
 					'-moz-border-radius':options.handleCornerRadius, 
 					'-webkit-border-radius':options.handleCornerRadius, 
