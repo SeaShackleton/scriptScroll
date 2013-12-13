@@ -21,6 +21,13 @@
 			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
 		</div>
 <br />
+		<div id="scrollWideHandle" style="width:300px; height:200px; text-align:right;">
+			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
+			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
+			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
+			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
+		</div>
+<br />
 		<div id="scrollThat" style="width:300px; height:200px;">
 			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
 		
@@ -72,6 +79,12 @@
 				</tr>
 			</table>
 		</div>
+		<div id="scrollThese" style="width:300px; height:200px; text-align:right;">
+			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
+			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
+			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
+			<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. </a>
+		</div>		
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 		<script src="scriptScroll.js"></script>	
@@ -81,18 +94,47 @@
 					scrollSpeed: 100,
 					handleWidth: 10,
 					handleCornerRadius: 36,
+					handleImage: 'handle.png',
+					trackCornerRadius: 36,
+					contentPadding:12,
+					trackOpposing:true,
+					data: "an extra bit",
+					onScrollReturn: function(data){
+						console.log(data);
+					}
+				});
+				$("#scrollWideHandle").scriptScroll({
+					trackColor:'#eeeeee',
+					scrollSpeed: 100,
+					handleWidth: 10,
+					handleImage: 'handleHorizontalPink.png',
+					contentPadding:12,
+					trackOpposing:true,
+					data: "an extra bit",
+					onScrollReturn: function(data){
+						console.log(data);
+					}
+				});
+				$("#scrollThat").scriptScroll({
+					trackColor:'#fff',
+					scrollSpeed: 100,
+					trackOpposing: true,
+					contentPadding: 35,
+					handleImage: 'handleHorizontal.png',
+					scrollVertical: false,
+					onScrollReturn: function(data){
+						console.log(data);
+					}
+				});
+				$("#scrollThese").scriptScroll({
+					trackColor:'#eeeeee',
+					scrollSpeed: 100,
+					handleWidth: 10,
+					handleCornerRadius: 36,
 					trackCornerRadius: 36,
 					contentPadding:12,
 					trackOpposing:true,
 					data: "an extra bit"
-				});
-				$("#scrollThat").scriptScroll({
-					trackColor:'#000000',
-					scrollSpeed: 100,
-					trackOpposing: true,
-					contentPadding: 35,
-					scrollVertical: false,
-					data: ""
 				});
 			
 		</script>
