@@ -19,13 +19,22 @@
 			};		 
 			var options = {};
 			$.extend(options,defaults,info);
+			if ($.easing.hnlInertia === undefined) {
+				$.easing.hnlInertia = function (x, t, b, c, d) {
+					var ts = (t /= d) * t,
+						tc = ts * t;
+					return b + c * (-1 * ts * ts + 4 * tc + -6 * ts + 4 * t);
+				};
+			}			
 			this.each(function(){
 				var $e = $(this), interactedToTop, currentPos = 0, scrollingContainer, scrolling, track, handle, imgObj; 
+				var touchStart, touchDistance, distance, touchStartToOrigin, acceleration, inertia, animationOptions;
+				var mulitplier = 1;
 				$e.handleTop = function(top){
 					handle.css("top",top+"px");						
 				};
-				$e.handleLeft = function(top){
-					handle.css("left",top+"px");						
+				$e.handleLeft = function(left){
+					handle.css("left",left+"px");						
 				};
 				$e.onCallBack = function(origin){
 					if (typeof options.onScrollReturn == 'function') {
@@ -37,19 +46,57 @@
 				$e.onScroll = function(e){
 					//MOBILE
 					if(e.originalEvent.touches){
-						console.log(e.originalEvent.touches[0].pageX)
-						console.log(e.originalEvent.touches[0].pageY)
 						if(options.scrollVertical === false){
 							//horizontal
 							switch(e.type){
 								case 'touchstart':
-									//console.log(e.type);
+									if(scrollingContainer.is(':animated')){
+										scrollingContainer.stop(true,false);
+										mulitplier += 0.5;
+									}else{
+										mulitplier = 1;
+									}
+									touchStart=e;
+									touchStartToOrigin = scrollingContainer.scrollLeft();
 									break;
 								case 'touchmove':
-									//console.log(e.type);
+									distance = touchStart.originalEvent.touches[0].pageX - e.originalEvent.touches[0].pageX;
+									touchDistance= touchStartToOrigin + distance;
+									acceleration = Math.abs(distance/(e.originalEvent.timeStamp-touchStart.originalEvent.timeStamp));
+									animationOptions = {
+										duration:0
+									};
+									scrollingContainer.animate({scrollLeft:touchDistance},animationOptions);
+									$e.handleLeft((scrollingContainer.scrollLeft() / (scrolling.get(0).scrollWidth- $e.width()) )*(track.innerWidth() - handle.innerWidth() ));									
 									break;
 								case 'touchend':
-									//console.log(e.type);
+									inertia = Math.pow(acceleration,2) * scrollingContainer.width();
+									inertia = (inertia  >  scrollingContainer.width()) ? scrollingContainer.innerWidth()/2 : inertia;
+									inertia = (distance<0)? -mulitplier*inertia : mulitplier*inertia;
+									console.log(acceleration)
+									if(e.originalEvent.timeStamp-touchStart.originalEvent.timeStamp > 100 && inertia !== 0 && acceleration > 1.2){
+										touchDistance = touchStartToOrigin + distance + inertia;										
+										animationOptions = {
+											duration: scrollingContainer.width() * 1.2,
+											progress: function(){$e.handleLeft((scrollingContainer.scrollLeft() / (scrolling.get(0).scrollWidth- $e.width()) )*(track.innerWidth() - handle.innerWidth() ));},
+											easing: 'hnlInertia',
+											complete: function(){
+												touchDistance,inertia,acceleration,touchStartToOrigin,distance = 0;
+												mulitplier = 1;
+											}
+										};	
+									}else{
+										animationOptions = {
+											duration: 0,
+											progress: function(){$e.handleLeft((scrollingContainer.scrollLeft() / (scrolling.get(0).scrollWidth- $e.width()) )*(track.innerWidth() - handle.innerWidth() ));},
+											complete: function(){
+												touchDistance,inertia,acceleration,touchStartToOrigin,distance = 0;
+												mulitplier = 1;
+											}
+										};									
+									}
+									scrollingContainer.animate({scrollLeft:touchDistance},animationOptions);
+									$e.handleLeft((scrollingContainer.scrollLeft() / (scrolling.get(0).scrollWidth- $e.width()) )*(track.innerWidth() - handle.innerWidth() ));									
 									break;
 								default:
 									return false;								
@@ -58,18 +105,56 @@
 							//vertical
 							switch(e.type){
 								case 'touchstart':
-									//console.log(e.type);
+									if(scrollingContainer.is(':animated')){
+										scrollingContainer.stop(true,false);
+										mulitplier += 0.5;
+									}else{
+										mulitplier = 1;
+									}
+									touchStart=e;
+									touchStartToOrigin = scrollingContainer.scrollTop();
 									break;
 								case 'touchmove':
-									//console.log(e.type);
+									distance = touchStart.originalEvent.touches[0].pageY - e.originalEvent.touches[0].pageY;
+									touchDistance= touchStartToOrigin + distance;
+									acceleration = Math.abs(distance/(e.originalEvent.timeStamp-touchStart.originalEvent.timeStamp));
+									animationOptions = {
+										duration:0
+									};
+									scrollingContainer.animate({scrollTop:touchDistance},animationOptions);
+									$e.handleTop((scrollingContainer.scrollTop() / (scrolling.get(0).scrollHeight- $e.height()) )*(track.innerHeight() - handle.innerHeight() ));									
 									break;
 								case 'touchend':
-									//console.log(e.type);
+									inertia = Math.pow(acceleration,2) * scrollingContainer.height();
+									inertia = (inertia  >  scrollingContainer.height()) ? scrollingContainer.innerHeight() : inertia;
+									inertia = (distance<0)? -mulitplier*inertia : mulitplier*inertia;
+									if(e.originalEvent.timeStamp-touchStart.originalEvent.timeStamp > 100 && inertia !== 0 && acceleration > 3.6){
+										touchDistance = touchStartToOrigin + distance + inertia;										
+										animationOptions = {
+											duration: scrollingContainer.height() * 1.2,
+											progress: function(){$e.handleTop((scrollingContainer.scrollTop() / (scrolling.get(0).scrollHeight- $e.height()) )*(track.innerHeight() - handle.innerHeight() ));},
+											easing: 'hnlInertia',
+											complete: function(){
+												touchDistance,inertia,acceleration,touchStartToOrigin,distance = 0;
+												mulitplier = 1;
+											}
+										};	
+									}else{
+										animationOptions = {
+											duration: 0,
+											progress: function(){$e.handleTop((scrollingContainer.scrollTop() / (scrolling.get(0).scrollHeight- $e.height()) )*(track.innerHeight() - handle.innerHeight() ));},
+											complete: function(){
+												touchDistance,inertia,acceleration,touchStartToOrigin,distance = 0;
+												mulitplier = 1;
+											}
+										};									
+									}
+									scrollingContainer.animate({scrollTop:touchDistance},animationOptions);
+									$e.handleTop((scrollingContainer.scrollTop() / (scrolling.get(0).scrollHeight- $e.height()) )*(track.innerHeight() - handle.innerHeight() ));									
 									break;
 								default:
 									return false;								
 							}
-						
 						}
 					}
 					//FIREFOX
@@ -296,7 +381,7 @@
 					//START OF MOBILE
 					$e.bind('touchstart touchmove touchend', function(e){
 						e.preventDefault();
-						$e.onScroll(e);
+						$e.onScroll(e);										
 					})
 				};
 				$e.init();
