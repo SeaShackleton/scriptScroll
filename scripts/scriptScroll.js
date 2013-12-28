@@ -1,5 +1,6 @@
 !function(global){
 	'use strict';
+	/*jslint browser:true */
 	var wrap = function($){
 		$.fn.scriptScroll = function(info){
 			var defaults = {
@@ -20,9 +21,8 @@
 			var options = {};
 			$.extend(options,defaults,info);
 			if ($.easing.hnlInertia === undefined) {
-				$.easing.hnlInertia = function (x, t, b, c, d) {
-					var ts = (t /= d) * t,
-						tc = ts * t;
+				$.easing.hnlInertia = function (x,t,b,c,d) {
+					var ts = (t /= d) * t, tc = ts * t;
 					return b + c * (-1 * ts * ts + 4 * tc + -6 * ts + 4 * t);
 				};
 			}			
@@ -75,7 +75,6 @@
 									inertia = Math.pow(acceleration,2) * scrollingContainer.width();
 									inertia = (inertia  >  scrollingContainer.width()) ? scrollingContainer.innerWidth()/2 : inertia;
 									inertia = (distance<0)? -mulitplier*inertia : mulitplier*inertia;
-									console.log(acceleration)
 									if(e.originalEvent.timeStamp-touchStart.originalEvent.timeStamp > 100 && inertia !== 0 && acceleration > 1.2){
 										touchDistance = touchStartToOrigin + distance + inertia;										
 										animationOptions = {
@@ -83,7 +82,11 @@
 											progress: function(){$e.handleLeft((scrollingContainer.scrollLeft() / (scrolling.get(0).scrollWidth- $e.width()) )*(track.innerWidth() - handle.innerWidth() ));},
 											easing: 'hnlInertia',
 											complete: function(){
-												touchDistance,inertia,acceleration,touchStartToOrigin,distance = 0;
+												touchDistance=0;
+												inertia=0;
+												acceleration=0;
+												touchStartToOrigin=0;
+												distance = 0;
 												mulitplier = 1;
 											}
 										};	
@@ -92,7 +95,11 @@
 											duration: 0,
 											progress: function(){$e.handleLeft((scrollingContainer.scrollLeft() / (scrolling.get(0).scrollWidth- $e.width()) )*(track.innerWidth() - handle.innerWidth() ));},
 											complete: function(){
-												touchDistance,inertia,acceleration,touchStartToOrigin,distance = 0;
+												touchDistance=0;
+												inertia=0;
+												acceleration=0;
+												touchStartToOrigin=0;
+												distance = 0;
 												mulitplier = 1;
 											}
 										};									
@@ -138,7 +145,10 @@
 											progress: function(){$e.handleTop((scrollingContainer.scrollTop() / (scrolling.get(0).scrollHeight- $e.height()) )*(track.innerHeight() - handle.innerHeight() ));},
 											easing: 'hnlInertia',
 											complete: function(){
-												touchDistance,inertia,acceleration,touchStartToOrigin,distance = 0;
+												touchDistance=0;
+												inertia=0;
+												acceleration=0;
+												touchStartToOrigin=0;
 												mulitplier = 1;
 											}
 										};	
@@ -147,7 +157,11 @@
 											duration: 0,
 											progress: function(){$e.handleTop((scrollingContainer.scrollTop() / (scrolling.get(0).scrollHeight- $e.height()) )*(track.innerHeight() - handle.innerHeight() ));},
 											complete: function(){
-												touchDistance,inertia,acceleration,touchStartToOrigin,distance = 0;
+												touchDistance=0;
+												inertia=0;
+												acceleration=0;
+												touchStartToOrigin=0;
+												distance = 0;
 												mulitplier = 1;
 											}
 										};									
@@ -230,7 +244,7 @@
 					if(options.scrollVertical === false){
 						//HORIZONTAL SCROLL
 						//DEFINE THE SCROLLINT CONTAINER
-						$e.wrapInner( $('<div>',{'class':'scrolling'}).css({position:'relative', height:'120px'})  );
+						$e.wrapInner( $('<div>',{'class':'scrolling'}).css({position:'relative'})  );
 						scrolling = $e.find('.scrolling');
 						scrollingContainer = $('<div>',{'class':'scrollingContainer'}).css({overflow:'hidden',  'white-space':'nowrap'});
 						$e.append(scrollingContainer);
@@ -270,13 +284,13 @@
 						$e.append(track);
 						if(options.trackOpposing === false){
 							$e.prepend(track);
-							scrollingContainer.css('padding-top',options.contentPadding);
+							scrolling.css('margin-top',options.contentPadding);
 						}else{
-							scrollingContainer.css('padding-bottom',options.contentPadding);
+							scrolling.css('margin-bottom',options.contentPadding);
 							$e.append(track);
 						}
 						//IF THERE IS DATA AVAILABLE, ADD IT TO THE END OF THE CURRENT CONTENT WITHIN scrolling
-						if(!options.data){
+						if(options.data !== null){
 							scrolling.append(options.data);
 						} 
 						handle.draggable({ 
@@ -324,7 +338,7 @@
 							imgObj.onload = function(){
 								track.css('width',this.width);
 								handle.css('height',this.height);
-								scrollingContainer.css('width', ($e.width()-options.handleWidth-options.contentPadding - this.width) )
+								scrollingContainer.css('width',($e.width()-options.handleWidth-options.contentPadding-this.width));
 								//alert(this.width)							
 							};
 							imgObj.src = options.handleImage;					
@@ -334,14 +348,14 @@
 						
 						
 						if(options.trackOpposing === false){
+							scrolling.css('padding-left',options.contentPadding);
 							$e.prepend(track);
-							scrollingContainer.css('padding-left',options.contentPadding);
 						}else{
-							scrollingContainer.css('padding-right',options.contentPadding);
+							scrolling.css('padding-right',options.contentPadding);
 							$e.append(track);
 						}
 						//IF THERE IS DATA AVAILABLE, ADD IT TO THE END OF THE CURRENT CONTENT WITHIN scrolling
-						if(options.data.length > 0){
+						if(options.data !== null){
 							scrolling.append(options.data);
 						} 
 						handle.draggable({ 
@@ -384,7 +398,7 @@
 					$e.bind('touchstart touchmove touchend', function(e){
 						e.preventDefault();
 						$e.onScroll(e);										
-					})
+					});
 				};
 				$e.init();
 			});
@@ -398,5 +412,5 @@
 	}else{
 		//THIS IS NOT AMD
 		wrap(global.jQuery);
-	};
+	}
 }(this);
