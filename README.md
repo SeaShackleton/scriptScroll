@@ -14,23 +14,31 @@ scriptScroll is a jQuery scroll plugin which supports AMD and mobile inertia scr
   Use
 </strong>
 <br />
+<strong>
+	HTML
+</strong>
 <pre>
-  <div id="elementToScroll">
-    <!--CONTENT HERE-->
-  </div>
-  <script type="text/javascript">
-    $("#elementToScroll").scriptScroll({
-      trackColor:'#ffffff',
-			scrollSpeed: 100,
-			handleWidth: 10,
-			handleCornerRadius: 36,
-			trackCornerRadius: 36,
-			contentPadding:30,
-			trackOpposing:true,    
-			handleImage: 'path/to/image',
-			onScrollReturn: function(data){
-				console.log(data);
-			}			
-    });
-  </script>
+	<div id="elementToScroll">
+	<!--CONTENT HERE-->
+	</div>
+</pre>
+<br />
+<strong>
+	JavaScript
+</strong>
+<br />
+<pre>
+	$("#elementToScroll").scriptScroll({
+		trackColor:'#ffffff',
+		scrollSpeed: 100,
+		handleWidth: 10,
+		handleCornerRadius: 36,
+		trackCornerRadius: 36,
+		contentPadding:30,
+		trackOpposing:true,    
+		handleImage: 'path/to/image',
+		onScrollReturn: function(data){
+		console.log(data);
+		}			
+	});
 </pre>
