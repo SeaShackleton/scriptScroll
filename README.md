@@ -58,11 +58,11 @@ This option takes 'ints' and 'strings' and defines the radius of all of the ange
 <br />
 
 ### handleImage: 
-This will define the background color of the handle, the draggable element inside the track. This defaults to false.
+This will define the 'src' to the image you would like used as the handle of the scroller. For this to properly work, you must resize the image to the exact dimentions you would like for it to appear upon the scroller.
 <br />
 
 ### handleWidth: 
-This will define the 'src' to the image you would like used as the handle of the scroller. For this to properly work, you must resize the image to the exact dimentions you would like for it to appear upon the scroller.
+This will define the width or height of the handle.  If the element is defined to scroll vertical, this option will define the width of the handle element. If the element is defined to scroll horizontal, this option will define the height of the handle element.
 <br />
 
 ### contentPadding: 
